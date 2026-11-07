@@ -1,0 +1,6 @@
+fold,train_subjects,heldout_subjects,heldout_windows,heldout_fall_windows,heldout_normal_windows,heldout_subject_list
+1,17,4,15133,645,14488,subject_14;subject_15;subject_19;subject_30
+2,17,4,15151,646,14505,subject_10;subject_13;subject_18;subject_26
+3,16,5,17696,752,16944,subject_16;subject_20;subject_22;subject_23;subject_3
+4,17,4,14915,685,14230,subject_11;subject_12;subject_17;subject_27
+5,17,4,14956,637,14319,subject_2;subject_28;subject_6;subject_7

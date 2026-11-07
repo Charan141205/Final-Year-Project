@@ -1,0 +1,20 @@
+{
+  "pipeline": "Balanced-12 inference + causal temporal confirmation",
+  "input_mode": "raw-cappimu",
+  "windows_processed": 3817,
+  "raw_positive_windows": 248,
+  "pending_positive_windows": 113,
+  "confirmed_fall_windows": 135,
+  "alert_trigger_events": 49,
+  "temporal_rule": "2_consecutive_positive_windows",
+  "threshold": 0.8733322266783254,
+  "limitations": [
+    "This is an offline Python simulation using CAPPIMU data, not live footwear sensing.",
+    "CAPPIMU pressure inputs are regional insole proxies, not actual shoe FSR measurements.",
+    "CAPPIMU IMU is knee-mounted, not shoe-mounted.",
+    "Labels are activity/window-level, not precise fall-onset annotations.",
+    "A confirmed alert is a model output, not a verified real-world fall."
+  ],
+  "prediction_csv": "C:\\Users\\lagis\\Downloads\\Smart_Footwear_Python_Complete_Package\\Smart_Footwear_Python_Complete_Package\\04_Integrated_Pipeline_Output\\All_Subjects_Raw\\subject_11\\balanced12_full_pipeline_predictions.csv",
+  "alert_events_csv": "C:\\Users\\lagis\\Downloads\\Smart_Footwear_Python_Complete_Package\\Smart_Footwear_Python_Complete_Package\\04_Integrated_Pipeline_Output\\All_Subjects_Raw\\subject_11\\balanced12_alert_events.csv"
+}

@@ -1,0 +1,18 @@
+{
+  "expected_subjects": 30,
+  "processed_subjects": 30,
+  "missing_or_error_subjects": 0,
+  "rows_scanned": 5986742,
+  "recording_gap_boundary_ms": 500.0,
+  "inner_feature_segment_gap_boundary_ms": 100.0,
+  "window_size_rows": 50,
+  "total_complete_50row_windows": 110949,
+  "historical_reference_windows": 110949,
+  "matches_historical_reference_window_count": true,
+  "windows_with_at_least_one_duplicate_step": 100055,
+  "duplicate_adjacent_steps_inside_complete_windows": 1066315,
+  "global_window_elapsed_ms_p05": 863.25068359375,
+  "global_window_elapsed_ms_median": 974.3525390625,
+  "global_window_elapsed_ms_p95": 1021.074462890625,
+  "note": "Read-only. Mirrors balanced12_full_pipeline.py: split recording at label change/dt<0/dt>500ms; split feature segments at label change/dt<0/dt>100ms; preserve dt=0; form non-overlapping 50-row windows. Timestamp units are milliseconds per CAPPIMU README."
+}

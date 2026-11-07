@@ -1,0 +1,17 @@
+{
+  "raw_root": "C:\\Users\\lagis\\Downloads\\data\\data",
+  "expected_subjects": 30,
+  "processed_subjects": 30,
+  "missing_subjects": 0,
+  "error_subjects": 0,
+  "rows_scanned": 5986742,
+  "ey_outlier_count": 15,
+  "ey_outlier_percent_of_rows": 0.0002505536400265787,
+  "provisional_range_assumptions": {
+    "knee_r(ex)": "+/-180 degrees",
+    "knee_r(ey)": "+/-90 degrees",
+    "knee_r(ez)": "+/-180 degrees"
+  },
+  "timestamp_gap_threshold_raw_units": 500.0,
+  "warning": "This is a range, local-context and timestamp diagnostic only. It does not confirm Euler-axis mapping, units, rotation convention, reference frame, or justify rotating IMU vectors."
+}

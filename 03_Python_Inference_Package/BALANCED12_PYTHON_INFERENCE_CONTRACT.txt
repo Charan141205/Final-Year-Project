@@ -1,0 +1,50 @@
+BALANCED-12 PYTHON INFERENCE CONTRACT
+====================================
+
+Model file:
+  balanced12_decision_tree.joblib
+
+Model properties:
+  Task: fall_related vs normal_activity
+  Input features: 12
+  Tree depth: 6
+  Nodes: 81
+  Leaves: 41
+  Class 0: normal_activity
+  Class 1: fall_related
+  Fall threshold: 0.873332226678
+
+Input features, in required order:
+  0: FSR1_heel_proxy_range
+  1: FSR2_midfoot_proxy_min
+  2: FSR3_forefoot_proxy_mean
+  3: FSR4_toe_proxy_min
+  4: Gz_rad_s_range
+  5: Ay_mps2_rms
+  6: Az_mps2_max
+  7: Gx_rad_s_std
+  8: Ax_mps2_min
+  9: Ay_mps2_max
+  10: Az_mps2_mean
+  11: Ax_mps2_rms
+
+Input contract:
+  - One input row represents one already-computed CAPPIMU window.
+  - The row must contain all 12 features above.
+  - Mapping/dictionary inputs are reordered using the manifest.
+  - Array inputs must already follow the exact order above.
+  - Inputs must be finite numeric values; NaN and infinity are rejected.
+  - Extra columns in a CSV are retained but not used by the classifier.
+
+Inference:
+  probability = model.predict_proba(X)[0, class_1]
+  fall_related if probability >= 0.873332226678
+  normal_activity otherwise
+
+This script does NOT derive these features from raw samples. It performs
+inference on precomputed feature rows.
+
+Compatibility caveat:
+  The feature names refer to CAPPIMU-derived pressure proxies and right-knee
+  IMU features. They are not automatically equivalent to current ESP32
+  shoe-mounted FSR/MPU6500 feature calculations.

@@ -1,0 +1,44 @@
+SMART FOOTWEAR PROJECT - PYTHON HANDOFF
+======================================
+
+You only need to extract this package once. It contains NO nested ZIP files.
+
+WHAT TO OPEN FIRST
+1. Open SMART_FOOTWEAR_PROJECT_WORKING_GUIDE.md for the full project status,
+   previous decisions, dataset details, model evaluation, and limitations.
+2. Open 03_Python_Inference_Package/BALANCED12_PYTHON_INFERENCE_CONTRACT.txt
+   for the model's required input feature order and inference usage.
+3. Open 03_Python_Inference_Package/BALANCED12_FEATURE_CALCULATION_SPEC.md
+   for the exact 12-feature definitions and formulas.
+
+FOLDER GUIDE
+01_Training_Data_and_Analysis/
+  - CAPPIMU-derived CSV data, split information, feature ranges, model analyses,
+    temporal simulation outputs, and supporting Python scripts/reports.
+  - Main model input CSV: balanced12_training_data.csv
+
+02_Model_Training_Outputs/
+  - Reproduced trained Decision Tree models, manifests, metrics, and reports.
+  - This folder is mainly for training/reproducibility and reference.
+
+03_Python_Inference_Package/
+  - balanced12_inference.py: Python inference wrapper.
+  - trained_models/balanced12_decision_tree.joblib: Balanced-12 model.
+  - balanced12_feature_calculator.py: computes the 12 features from a raw
+    50-row CAPPIMU window.
+  - balanced12_temporal_confirmation.py: offline causal 2-positive-window
+    confirmation simulator.
+  - Read the contract/spec before running scripts.
+
+CURRENT WORKING DIRECTION
+- Continue in Python only for now.
+- Use the existing CAPPIMU dataset; do not collect new ESP32 data.
+- Keep Balanced-12 as the current reference model and use the threshold recorded
+  in its manifest/contract. The depth-8 model is experimental, not promoted.
+- Do not begin ESP32 firmware, C++, or RTL implementation unless explicitly
+  requested later.
+
+IMPORTANT LIMITATIONS
+CAPPIMU pressure channels are regional insole proxies, and its IMU is knee-mounted,
+not mounted in the footwear. The labels are activity/window-level, not exact fall-
+onset labels. Offline model metrics do not prove real-world smart-footwear accuracy.

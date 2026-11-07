@@ -1,0 +1,29 @@
+{
+  "classifier": "Balanced-12",
+  "threshold": 0.8733322266783254,
+  "temporal_policy": "alert at second or later consecutive positive window, within same subject/recording/segment",
+  "row_metrics": {
+    "accuracy": 0.9735712826101764,
+    "balanced_accuracy": 0.725218331545888,
+    "precision": 0.8960244648318043,
+    "recall": 0.4528593508500773,
+    "f1": 0.6016427104722792,
+    "f2": 0.5025728987993139,
+    "fpr": 0.0024226877583012683,
+    "tn": 14000,
+    "fp": 34,
+    "fn": 354,
+    "tp": 293
+  },
+  "segment_metrics": {
+    "fall_segments": 61,
+    "fall_segments_with_alert": 49,
+    "fall_segment_detection_rate": 0.8032786885245902,
+    "fall_segments_without_alert": 12,
+    "normal_segments": 1657,
+    "normal_segments_with_false_alarm": 26,
+    "normal_segment_false_alarm_rate": 0.015691007845503924,
+    "total_alert_trigger_events": 125
+  },
+  "warning": "Segment-level activity detection is not real-world event-onset detection."
+}

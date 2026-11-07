@@ -1,0 +1,52 @@
+{
+  "model_name": "Balanced-12",
+  "task": "fall_related vs normal_activity",
+  "feature_count": 12,
+  "feature_order": [
+    "FSR1_heel_proxy_range",
+    "FSR2_midfoot_proxy_min",
+    "FSR3_forefoot_proxy_mean",
+    "FSR4_toe_proxy_min",
+    "Gz_rad_s_range",
+    "Ay_mps2_rms",
+    "Az_mps2_max",
+    "Gx_rad_s_std",
+    "Ax_mps2_min",
+    "Ay_mps2_max",
+    "Az_mps2_mean",
+    "Ax_mps2_rms"
+  ],
+  "class_mapping": {
+    "0": "normal_activity",
+    "1": "fall_related"
+  },
+  "selected_operating_threshold": 0.8733322266783254,
+  "threshold_selection_basis": "Previously selected using validation split; retained without test-set tuning.",
+  "training_split": "train",
+  "validation_split": "validation",
+  "test_split": "test_diagnostic_only",
+  "tree_depth": 6,
+  "node_count": 81,
+  "leaf_count": 41,
+  "sklearn_parameters": {
+    "ccp_alpha": 0.0,
+    "class_weight": "balanced",
+    "criterion": "gini",
+    "max_depth": 6,
+    "max_features": null,
+    "max_leaf_nodes": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 50,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "random_state": 42,
+    "splitter": "best"
+  },
+  "limitations": [
+    "CAPPIMU pressure inputs are regional pressure proxies, not actual shoe FSR sensor ADC values.",
+    "CAPPIMU IMU is right-knee mounted, not shoe-mounted.",
+    "The target is activity/window-level fall_related versus normal_activity, not precise fall onset.",
+    "This model's dataset results do not establish accuracy on the physical ESP32 footwear prototype."
+  ]
+}

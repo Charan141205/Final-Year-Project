@@ -1,0 +1,78 @@
+BALANCED-12 FIXED-POINT VERIFICATION REPORT
+===========================================
+
+Model:
+  Balanced-12 DecisionTreeClassifier
+  Features: 12
+  Depth: 6
+  Nodes: 81
+  Leaves: 41
+  Probability threshold: 0.873332226678
+
+Dataset:
+  Total windows: 110,949
+  Train: 77,851
+  Validation: 14,681
+  Test: 18,417
+
+Method:
+  - Floating-point reference: sklearn model.predict_proba using float32 inputs.
+  - Leaf output: thresholded at the validation-selected fall probability threshold.
+  - Fixed-point: round-to-nearest for both feature values and tree split thresholds.
+  - Tree traversal uses integer comparisons.
+  - Mismatch means integer-tree output differs from floating-point-tree output.
+  - Mismatch does NOT mean wrong prediction against ground-truth label.
+
+Results:
+ fractional_bits      split  samples  mismatches  mismatch_rate
+               4      train    77851         292       0.003751
+               4 validation    14681          34       0.002316
+               4       test    18417          49       0.002661
+               4        all   110949         375       0.003380
+               6      train    77851          46       0.000591
+               6 validation    14681           4       0.000272
+               6       test    18417           6       0.000326
+               6        all   110949          56       0.000505
+               8      train    77851          16       0.000206
+               8 validation    14681           3       0.000204
+               8       test    18417           0       0.000000
+               8        all   110949          19       0.000171
+              10      train    77851           3       0.000039
+              10 validation    14681           0       0.000000
+              10       test    18417           0       0.000000
+              10        all   110949           3       0.000027
+              12      train    77851           2       0.000026
+              12 validation    14681           0       0.000000
+              12       test    18417           0       0.000000
+              12        all   110949           2       0.000018
+              14      train    77851           1       0.000013
+              14 validation    14681           0       0.000000
+              14       test    18417           0       0.000000
+              14        all   110949           1       0.000009
+              16      train    77851           0       0.000000
+              16 validation    14681           0       0.000000
+              16       test    18417           0       0.000000
+              16        all   110949           0       0.000000
+
+Engineering interpretation:
+  - Q8 (8 fractional bits, scale 256): 19/110,949 mismatches (0.0171%); zero on test.
+  - Q10 (10 fractional bits, scale 1024): 3/110,949 mismatches; zero on validation and test.
+  - Q12 (12 fractional bits, scale 4096): 2/110,949 mismatches; both are in training; zero on validation and test.
+  - Q14 and Q16 further reduce mismatches but exceed signed int32 range under a single global scale.
+  - Q12 requires 31 signed bits according to the dataset maximum, so signed int32 is sufficient for this dataset-wide range.
+  - Q12 is the current practical uniform-scale candidate, subject to reproducing the same rounding, feature arithmetic and overflow behavior in C++.
+
+Range warning:
+  FSR1_heel_proxy_range has maximum 235,653, while its 99.9th percentile is about 1,669.4.
+  The maximum comes from:
+    subject_9 / subject_9_block15_mop / activity mop / window 138
+  This extreme value dominates the global fixed-point integer width. It should be traced to the original recording and processing notes before finalizing input scaling. Do not silently clip it.
+
+Important limits:
+  - This is a software quantization audit of CAPPIMU-derived feature vectors.
+  - It does not yet verify the actual ESP32 feature arithmetic, C++ implementation, sensor domain compatibility, or physical footwear accuracy.
+  - The source dataset uses pressure proxies and knee-mounted IMU data, not actual shoe-mounted FSR/MPU6500 data.
+  - The CAPPIMU test partition has already been inspected in earlier experiments; test metrics are diagnostic.
+
+Recommended next action:
+  Investigate the FSR1 extreme-value source, then implement a Q12 integer inference reference in C++ and compare it against Python on every saved row. Preserve Q8 and Q10 as alternative precision/complexity points.

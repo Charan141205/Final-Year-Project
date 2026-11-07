@@ -1,0 +1,64 @@
+BALANCED-12 CAUSAL TEMPORAL CONFIRMATION SIMULATION
+===================================================
+
+Policy:
+  - Keep the Balanced-12 model and its threshold unchanged.
+  - First positive window is marked pending.
+  - Emit an alert trigger only when the second consecutive positive window
+    occurs within the same subject/recording/segment.
+  - `confirmed_fall` remains active for later adjacent positive windows.
+  - Reset the consecutive counter on a negative prediction or a window-ID gap.
+  - Do not combine sequences across segment boundaries.
+
+Validation data:
+  - Total windows: 14,681
+  - Fall-related windows: 647
+  - Normal-activity windows: 14,034
+  - Fall activity segments: 61
+  - Normal activity segments: 1657
+
+Causal per-window results:
+  TN=14000, FP=34, FN=354, TP=293
+  Precision=89.6024%
+  Recall=45.2859%
+  F1=60.1643%
+  F2=50.2573%
+  FPR=0.2423%
+
+Segment-level activity-label results:
+  Fall activity segments receiving >=1 alert: 49/61
+  Fall activity segment detection rate: 80.3279%
+  Fall activity segments with no alert: 12
+  Normal activity segments with >=1 false alarm: 26/1657
+  Normal segment false-alarm rate: 1.5691%
+
+Alert trigger pulses:
+  Total triggers: 125
+  Triggers during fall-labelled activity segments: 96
+  Triggers during normal activity segments: 29
+
+Timing:
+  Median adjacent-window start interval is about 995 ms. The second positive
+  window therefore adds approximately one nominal window of confirmation delay.
+  Actual timestamps are irregular, so this is only an approximate dataset interval.
+
+Important distinction:
+  A previous retrospective run filter marked every window in a positive run
+  once the run length was >=2. That is not directly causal. This simulation
+  emits the confirmation only from the second positive window onward.
+  Do not compare retrospective backfilled per-window metrics with this causal
+  rule as if they were the same real-time algorithm.
+
+Limitations:
+  - CAPPIMU labels identify an entire activity/window as `fall`, not the exact
+    moment a fall begins. Segment-level "detection" means the model generated
+    at least one alert within a segment labelled as fall; it does NOT mean
+    precise fall-onset or emergency-event detection.
+  - The model uses CAPPIMU pressure proxies and knee-mounted IMU data.
+  - This simulation is offline and has not been validated on live ESP32 signals.
+  - There is no alert cooldown, cancel button, GPS, GSM or caregiver-notification
+    logic in this simulation.
+
+Decision:
+  Keep the causal 2-window rule as a candidate for further Python workflow
+  design only. No final alarm policy or model deployment is approved.

@@ -1,0 +1,80 @@
+BALANCED-12 VALIDATION ERROR ANALYSIS
+=====================================
+
+Model:
+  Balanced-12 Decision Tree
+  Probability threshold: 0.873332226678
+  Split: validation only
+  Windows: 14,681
+
+Confusion matrix (positive = fall_related):
+  TN: 13,690
+  FP: 344
+  FN: 223
+  TP: 424
+
+Validation metrics:
+  Accuracy: 96.137865%
+  Fall precision: 55.208333%
+  Fall recall: 65.533230%
+  Fall F1: 59.929329%
+  False-positive rate: 2.451190%
+
+Interpretation:
+  - All 344 false positives occurred on normal-activity windows.
+  - Normal activities with most false positives:
+ activity_label  normal_windows  false_positives  normal_false_positive_rate
+        ironing             702               99                    0.141026
+          sweep             726               82                    0.112948
+             wc             706               48                    0.067989
+            mop             681               40                    0.058737
+    wash_window             624               29                    0.046474
+          cycle             725               13                    0.017931
+   use_computer             704                6                    0.008523
+folding_clothes             725                5                    0.006897
+  - All 223 false negatives belong to activity_label='fall' in the validation split.
+  - Fall false negatives by validation subject:
+subject_id  fall_related_windows  true_positives  false_negatives  fall_recall
+subject_25                   173             101               72     0.583815
+subject_29                   137             114               23     0.832117
+ subject_5                   162             105               57     0.648148
+ subject_8                   175             104               71     0.594286
+  - False negatives by probability:
+probability_band
+<0.10                  14
+0.10–0.25               5
+0.25–0.50              81
+0.50–0.75             121
+0.75–threshold          2
+at/above threshold      0
+  - Top false-positive recordings:
+                  recording_id activity_label  false_positives
+    subject_29_block20_ironing        ironing               40
+     subject_5_block21_ironing        ironing               36
+         subject_29_block01_wc             wc               30
+      subject_25_block07_sweep          sweep               26
+       subject_8_block14_sweep          sweep               24
+subject_29_block10_wash_window    wash_window               21
+        subject_29_block09_mop            mop               18
+      subject_29_block08_sweep          sweep               17
+    subject_25_block20_ironing        ironing               16
+       subject_5_block14_sweep          sweep               15
+  - False-negative recordings:
+           recording_id activity_label  false_negatives
+subject_25_block21_fall           fall               72
+ subject_8_block13_fall           fall               71
+ subject_5_block13_fall           fall               57
+subject_29_block21_fall           fall               23
+
+What this says:
+  - Validation false alarms are concentrated in some normal activity recordings, especially ironing and sweeping.
+  - The model misses 223 of 647 fall-related windows at the selected threshold.
+  - This is window-level classification; it is not precise fall-onset detection.
+  - These results do not justify changing the threshold or retraining by themselves.
+  - Do not use the test split to tune corrections.
+
+Recommended next Python-only step:
+  Inspect the validation false-positive and false-negative windows against the
+  12 input feature values and decision-tree paths. Identify which feature
+  conditions produce each error. Then decide whether any change is supported
+  by validation evidence. Keep the current model and threshold as the baseline.

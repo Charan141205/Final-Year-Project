@@ -1,0 +1,2 @@
+selected_policy,selected_max_interwindow_gap_ms,validation_F2,validation_precision,validation_recall,validation_FPR,validation_alert_trigger_events,FPR_limit,selection_reason,test_used_for_selection
+gap_aware_2_of_3_warm_start,500,0.6481481481481481,0.8142857142857143,0.616692426584235,0.006484252529571042,143,0.01,Highest validation F2 among candidates meeting the validation FPR limit; smaller gap wins ties.,False

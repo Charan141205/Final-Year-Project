@@ -1,0 +1,93 @@
+BALANCED-12 OFFLINE TEMPORAL CONSISTENCY ANALYSIS
+==================================================
+
+Frozen classifier:
+  Balanced-12, 12 features, depth 6, 81 nodes, 41 leaves.
+  Original threshold: 0.873332226678.
+  Validation split only: 14,681 windows.
+  Model and threshold unchanged.
+
+Grouping:
+  Consecutive predictions were grouped only within the same
+  subject_id + recording_id + segment_id, ordered by window_id.
+  Runs were never joined across segment boundaries.
+
+Adjacent window timing:
+  Number of adjacent-window pairs: 12,963
+  Median start-to-start interval: 995.305 ms
+  5th-95th percentile: 911.067-1037.804 ms
+  Share between 500 and 1500 ms: 99.98457%
+  Nominally, one confirmation window adds about one second, but timestamps are not perfectly regular.
+
+Comparison:
+                                   logic  minimum_run_windows  accuracy  balanced_accuracy  precision   recall       f1       f2      fpr    tn  fp  fn  tp
+                 Original threshold only                    1  0.961379           0.815410   0.552083 0.655332 0.599293 0.631704 0.024512 13690 344 223 424
+Require >=2 consecutive positive windows                    2  0.978135           0.798374   0.860619 0.601236 0.707916 0.639803 0.004489 13971  63 258 389
+Require >=3 consecutive positive windows                    3  0.978816           0.770718   0.959016 0.542504 0.692991 0.594110 0.001069 14019  15 296 351
+
+Positive-run observations:
+  Total positive runs: 441
+  Positive runs on normal-activity windows: 310
+  Positive runs on fall-related windows: 131
+  Isolated one-window normal false-alarm runs: 281
+  Persistent normal false-alarm runs (>=2 windows): 29
+  Windows in persistent false-alarm runs: 63
+
+Persistent false-alarm runs by activity:
+  activity_label  false_positive_runs  false_positive_windows  maximum_run
+         ironing                   97                      99            2
+           sweep                   69                      82            3
+              wc                   42                      48            3
+             mop                   35                      40            2
+     wash_window                   27                      29            2
+           cycle                   13                      13            1
+    use_computer                    5                       6            2
+ folding_clothes                    5                       5            1
+        watch_tv                    2                       4            3
+             run                    4                       4            1
+hang_out_clothes                    3                       3            1
+            walk                    3                       3            1
+      play_phone                    1                       3            3
+       wash_face                    3                       3            1
+  brushing_teeth                    1                       2            2
+
+
+Activity-level change in false-positive windows:
+ activity_label  raw_false_positives  two_window_false_positives
+        ironing                   99                           4
+          sweep                   82                          24
+             wc                   48                          11
+            mop                   40                          10
+    wash_window                   29                           4
+          cycle                   13                           0
+   use_computer                    6                           2
+folding_clothes                    5                           0
+            run                    4                           0
+       watch_tv                    4                           3
+
+The two-window rule particularly reduces isolated `ironing` and `sweep` false-positive windows, but some multi-window false alarms remain.
+
+Interpretation:
+  - Requiring >=2 consecutive positive windows reduces validation false-positive windows from
+    344 to 63 and reduces false-positive rate from 2.45% to 0.45%.
+  - It also reduces true-positive windows from 424 to 389 and fall recall from 65.53% to 60.12%.
+  - Fall precision rises from 55.21% to 86.06%; validation F2 moves from 63.17% to 63.98%.
+  - Requiring >=3 positive windows reduces false alarms further but causes a larger recall loss
+    and a lower F2 (59.41%).
+  - Two consecutive windows is therefore a promising offline confirmation candidate, not a
+    proven live emergency rule.
+
+Critical caveats:
+  - CAPPIMU windows are activity/window-level labels, not exact fall-onset labels.
+  - The simulated filter retrospectively marks all windows in a positive run once the run
+    reaches the required length. In real-time, confirmation occurs only after the second
+    positive window; the first window cannot be confirmed in advance.
+  - CAPPIMU sampling timestamps are irregular; nominal 50 Hz / about 1-second windows are
+    approximations.
+  - Do not infer real emergency detection latency or field false-alarm rates from this analysis.
+  - No model, feature order, trained parameters, or classifier threshold has been changed.
+
+Recommendation:
+  Keep the classifier frozen. Carry "2 consecutive positive windows" forward as a candidate
+  temporal confirmation policy for further offline Python testing. Do not claim it as final
+  or deploy it on the physical prototype without event-level ground truth and hardware tests.

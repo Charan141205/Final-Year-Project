@@ -1,0 +1,3 @@
+model,features,depth,nodes,leaves,retrained_tree_matches_previous_tree,train_windows,validation_windows,test_windows
+Balanced-12,12,6,81,41,True,77851,14681,18417
+Low-arithmetic-12,12,4,25,13,True,77851,14681,18417

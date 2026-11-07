@@ -1,0 +1,14 @@
+{
+  "raw_root": "C:\\Users\\lagis\\Downloads\\data\\data",
+  "expected_subjects": 30,
+  "processed_subjects": 30,
+  "missing_subjects": 0,
+  "error_subjects": 0,
+  "rows_scanned": 5986742,
+  "provisional_mapping_for_range_check": {
+    "knee_r(ex)": "+/-180 deg",
+    "knee_r(ey)": "+/-90 deg",
+    "knee_r(ez)": "+/-180 deg"
+  },
+  "important_note": "This is a diagnostic range/continuity check only. The nominal range mapping is provisional (X/roll, Y/pitch, Z/yaw) based on the BWT901CL datasheet. Do not rotate vectors until CAPPIMU export mapping and device configuration are confirmed."
+}

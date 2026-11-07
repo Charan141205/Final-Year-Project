@@ -1,0 +1,24 @@
+{
+  "raw_root": "C:\\Users\\lagis\\Downloads\\data\\data",
+  "expected_subjects": 30,
+  "subject_folders_found": 30,
+  "processed_subjects": 30,
+  "missing_or_failed_subjects": 0,
+  "total_rows_scanned": 5986742,
+  "channels_scanned": [
+    "knee_r(ex)",
+    "knee_r(ey)",
+    "knee_r(ez)",
+    "knee_r(ax)",
+    "knee_r(ay)",
+    "knee_r(az)",
+    "knee_r(wx)",
+    "knee_r(wy)",
+    "knee_r(wz)"
+  ],
+  "outputs": [
+    "orientation_channel_summary.csv",
+    "orientation_file_inventory.csv"
+  ],
+  "important_note": "Euler-like fields ex/ey/ez were summarized as stored. Their units, rotation order, axis convention, and reference frame must be confirmed from authoritative dataset/device documentation before using them to rotate acceleration or gyroscope vectors. No transformation was applied."
+}

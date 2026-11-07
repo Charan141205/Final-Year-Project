@@ -1,0 +1,20 @@
+{
+  "target": {
+    "0": "normal_activity",
+    "1": "fall_related"
+  },
+  "splits": "Existing participant-wise train/validation/test splits retained",
+  "test_usage": "Diagnostic only; not used for threshold selection or model selection",
+  "models": {
+    "Balanced-12": {
+      "previous_bundle_threshold": 0.8733322266783254,
+      "retrained_validation_f2_threshold": 0.8733322266783254,
+      "selected_operating_threshold": 0.8733322266783254
+    },
+    "Low-arithmetic-12": {
+      "previous_bundle_threshold": 0.7202987044355778,
+      "retrained_validation_f2_threshold": 0.7202987044355778,
+      "selected_operating_threshold": 0.7202987044355778
+    }
+  }
+}

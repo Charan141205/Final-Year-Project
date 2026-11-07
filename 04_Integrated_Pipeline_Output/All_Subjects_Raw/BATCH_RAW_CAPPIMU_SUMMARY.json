@@ -1,0 +1,25 @@
+{
+  "pipeline": "Balanced-12 raw CAPPIMU batch processing",
+  "raw_root": "C:\\Users\\lagis\\Downloads\\data\\data",
+  "output_dir": "C:\\Users\\lagis\\Downloads\\Smart_Footwear_Python_Complete_Package\\Smart_Footwear_Python_Complete_Package\\04_Integrated_Pipeline_Output\\All_Subjects_Raw",
+  "expected_subjects": 30,
+  "processed_subjects": 30,
+  "missing_or_ambiguous_subjects": 0,
+  "error_subjects": 0,
+  "total_windows_processed": 110949,
+  "total_raw_positive_windows": 6164,
+  "total_pending_positive_windows": 3312,
+  "total_confirmed_fall_windows": 2852,
+  "total_alert_trigger_events": 1048,
+  "subjects_matching_reference_features": 30,
+  "reference_feature_table_used": "C:\\Users\\lagis\\Downloads\\Smart_Footwear_Python_Complete_Package\\Smart_Footwear_Python_Complete_Package\\01_Training_Data_and_Analysis\\balanced12_training_data.csv",
+  "per_subject_summary_csv": "C:\\Users\\lagis\\Downloads\\Smart_Footwear_Python_Complete_Package\\Smart_Footwear_Python_Complete_Package\\04_Integrated_Pipeline_Output\\All_Subjects_Raw\\batch_subject_summary.csv",
+  "limitations": [
+    "Offline processing of existing CAPPIMU recordings only; no new ESP32 data is collected.",
+    "CAPPIMU pressure channels are regional insole proxies, not actual shoe FSR measurements.",
+    "CAPPIMU IMU is knee-mounted, not shoe-mounted.",
+    "Dataset labels are activity/window-level, not precise fall-onset annotations.",
+    "Confirmed alerts are model outputs, not verified real-world falls.",
+    "Temporal confirmation is reset independently for each participant recording."
+  ]
+}

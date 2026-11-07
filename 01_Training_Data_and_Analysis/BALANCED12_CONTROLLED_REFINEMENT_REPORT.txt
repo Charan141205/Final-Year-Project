@@ -1,0 +1,98 @@
+BALANCED-12 CONTROLLED MODEL REFINEMENT REPORT
+===============================================
+
+Objective
+---------
+Test whether a small, predefined set of tree complexity settings improves the
+Balanced-12 classifier, without using the CAPPIMU test participants for tuning.
+
+Data and split use
+------------------
+- Existing dataset only; no new ESP32 measurements.
+- Fixed Balanced-12 feature set (12 input features).
+- Training participants: 21 subjects, 77,851 windows.
+- Validation participants: 4 subjects, 14,681 windows.
+- Test participants: 5 subjects, 18,417 windows.
+- Hyperparameter and threshold selection used training participants only.
+- Five-fold StratifiedGroupKFold with subject_id as the grouping variable.
+- The CAPPIMU test split was not used in this experiment.
+
+Candidate search
+----------------
+- max_depth in [4, 5, 6, 7, 8]
+- min_samples_leaf in [50, 100, 200]
+- criterion = gini
+- class_weight = balanced
+- random_state = 42
+- Threshold selected from out-of-fold training probabilities by maximizing
+  fall F2 subject to false-positive rate <= 5%.
+
+Best grouped-CV candidate
+------------------------
+- max_depth = 8
+- min_samples_leaf = 100
+- OOF threshold = 0.818753937321
+- OOF F2 = 0.667219
+- OOF precision = 0.475438
+- OOF recall = 0.742051
+- OOF FPR = 0.036987
+- Mean fold nodes = 152.60
+
+One-time validation comparison
+------------------------------
+                                                       candidate  max_depth  min_samples_leaf  nodes  leaves                        threshold_source  threshold  accuracy  balanced_accuracy  fall_precision  fall_recall  fall_f1  fall_f2  false_positive_rate    tn  fp  fn  tp
+        Frozen Balanced-12 configuration; OOF-selected threshold          6                50     81      41 5-fold grouped OOF on training subjects   0.848987  0.960561           0.816457        0.543367     0.658423 0.595388 0.631673             0.025509 13676 358 221 426
+                                               Refined candidate          8               100    163      82 5-fold grouped OOF on training subjects   0.818754  0.956474           0.821691        0.504630     0.673879 0.577101 0.631518             0.030497 13606 428 211 436
+Frozen Balanced-12 legacy operating point (historical reference)          6                50     81      41       previously selected on validation   0.873332  0.961379           0.815410        0.552083     0.655332 0.599293 0.631704             0.024512 13690 344 223 424
+
+Decision
+--------
+The deeper candidate is NOT promoted as the new reference model.
+
+Reasons:
+1. The deeper candidate's validation F2 is 0.631518, versus
+   0.631704 for the current legacy Balanced-12 operating point.
+   The difference is -0.000186, which is negligible.
+2. The deeper candidate has 163 nodes versus 81 in the
+   reference model (about 2.01x as many).
+3. Validation false-positive rate increases from
+   2.4512% to
+   3.0497%.
+4. Recall increases only from 65.5332% to
+   67.3879%, while precision decreases from
+   55.2083% to 50.4630%.
+
+Official model decision
+-----------------------
+Keep the original Balanced-12 reference model unchanged:
+- 12 selected features
+- depth 6
+- 81 nodes
+- 41 leaves
+- legacy validation-selected threshold = 0.8733322266783254
+
+The depth-8/min_leaf-100 model is retained as an experimental alternative only.
+
+Important caveats
+-----------------
+- Validation participants have already been used in earlier model development;
+  validation results are development evidence, not an untouched final estimate.
+- No test split evaluation was used for candidate selection in this experiment.
+- The source labels distinguish activity/window-level fall_related from
+  normal_activity; they do not provide precise fall-onset ground truth.
+- CAPPIMU pressure proxies and knee-mounted IMU differ from the actual shoe
+  FSR/MPU sensors. These results do not establish physical footwear accuracy.
+- `fall_probability` is a class-weight-adjusted model score, not a calibrated
+  real-world probability of a fall.
+
+Next recommended work
+---------------------
+Do not launch another broad hyperparameter search immediately. The fixed feature
+set and current tree appear to have reached a point where a larger tree does not
+transfer its cross-validation gain to the existing validation participants.
+
+The next useful Python step is to check temporal consistency of the window
+predictions by recording: whether consecutive fall-related windows occur in
+runs, and how long isolated false-positive and true-positive runs last. This is
+an offline analysis only. It can inform whether a temporal confirmation layer
+may help; do not assume it is deployable until validated with event-level data.

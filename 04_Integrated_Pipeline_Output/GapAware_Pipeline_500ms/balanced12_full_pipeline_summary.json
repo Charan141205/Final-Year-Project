@@ -1,0 +1,36 @@
+{
+  "pipeline": "Balanced-12 inference with selectable temporal confirmation",
+  "input_mode": "feature-table",
+  "temporal_policy": "gap-aware-2-of-3",
+  "max_interwindow_gap_ms": 500.0,
+  "windows_processed": 110949,
+  "raw_positive_windows": 6164,
+  "pending_positive_windows": 2563,
+  "confirmed_fall_windows": 4468,
+  "alert_trigger_events": 1129,
+  "threshold": 0.8733322266783254,
+  "model_feature_order": [
+    "FSR1_heel_proxy_range",
+    "FSR2_midfoot_proxy_min",
+    "FSR3_forefoot_proxy_mean",
+    "FSR4_toe_proxy_min",
+    "Gz_rad_s_range",
+    "Ay_mps2_rms",
+    "Az_mps2_max",
+    "Gx_rad_s_std",
+    "Ax_mps2_min",
+    "Ay_mps2_max",
+    "Az_mps2_mean",
+    "Ax_mps2_rms"
+  ],
+  "limitations": [
+    "Offline CAPPIMU simulation, not live footwear sensing.",
+    "Regional pressure channels are proxies, not physical footwear FSR measurements.",
+    "The IMU is knee-mounted, not shoe-mounted.",
+    "Labels are activity/window-level, not precise fall-onset annotations.",
+    "Alerts are model outputs, not verified real-world falls.",
+    "Gap-aware confirmation is experimental; the original two-consecutive policy remains the baseline."
+  ],
+  "prediction_csv": "04_Integrated_Pipeline_Output\\GapAware_Pipeline_500ms\\balanced12_full_pipeline_predictions.csv",
+  "alert_events_csv": "04_Integrated_Pipeline_Output\\GapAware_Pipeline_500ms\\balanced12_alert_events.csv"
+}

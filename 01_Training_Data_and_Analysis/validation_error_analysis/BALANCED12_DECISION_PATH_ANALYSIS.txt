@@ -1,0 +1,72 @@
+BALANCED-12 DECISION TREE VALIDATION ERROR-PATH TRACE
+======================================================
+
+Reference model:
+  Balanced-12, 81 nodes, 41 leaves, depth 6.
+  Operating threshold: 0.873332226678.
+  Split analyzed: validation only.
+  Validation errors: 344 false positives; 223 false negatives.
+
+KEY FINDING 1 — FALSE POSITIVES ARE CONCENTRATED
+------------------------------------------------
+The two largest false-positive leaves are:
+ leaf_id  leaf_fall_probability  window_count  false_positives                                                                                                                                                            path_conditions                                                                                                      activities_top
+      68               0.897214           300              218 Gz_rad_s_range > 0.475641 AND Ay_mps2_rms > 8.0514 AND Gx_rad_s_std <= 1.69729 AND Az_mps2_max > -0.557849 AND FSR3_forefoot_proxy_mean <= 2.045 AND Ax_mps2_rms > 2.36256 {"sweep": 82, "fall": 82, "wc": 42, "mop": 38, "wash_window": 27, "cycle": 8, "folding_clothes": 5, "wash_face": 3}
+      51               0.884954           138               95             Gz_rad_s_range > 0.475641 AND Ay_mps2_rms <= 8.0514 AND Ax_mps2_rms > 2.2772 AND Gx_rad_s_std <= 2.01414 AND Az_mps2_max > -5.85143 AND Ax_mps2_rms <= 3.79596          {"ironing": 83, "fall": 43, "use_computer": 5, "wc": 2, "wash_window": 2, "cycle": 1, "walk": 1, "mop": 1}
+
+They account for 313 of 344 false positives (91.0%).
+
+Full false-positive leaf summary:
+ leaf_id  leaf_fall_probability  window_count  false_positives                                                                                                                                                             path_conditions                                                                                                      activities_top
+      68               0.897214           300              218  Gz_rad_s_range > 0.475641 AND Ay_mps2_rms > 8.0514 AND Gx_rad_s_std <= 1.69729 AND Az_mps2_max > -0.557849 AND FSR3_forefoot_proxy_mean <= 2.045 AND Ax_mps2_rms > 2.36256 {"sweep": 82, "fall": 82, "wc": 42, "mop": 38, "wash_window": 27, "cycle": 8, "folding_clothes": 5, "wash_face": 3}
+      51               0.884954           138               95              Gz_rad_s_range > 0.475641 AND Ay_mps2_rms <= 8.0514 AND Ax_mps2_rms > 2.2772 AND Gx_rad_s_std <= 2.01414 AND Az_mps2_max > -5.85143 AND Ax_mps2_rms <= 3.79596          {"ironing": 83, "fall": 43, "use_computer": 5, "wc": 2, "wash_window": 2, "cycle": 1, "walk": 1, "mop": 1}
+      52               0.993672           288               20               Gz_rad_s_range > 0.475641 AND Ay_mps2_rms <= 8.0514 AND Ax_mps2_rms > 2.2772 AND Gx_rad_s_std <= 2.01414 AND Az_mps2_max > -5.85143 AND Ax_mps2_rms > 3.79596                                        {"fall": 268, "ironing": 14, "wc": 3, "use_computer": 1, "mop": 1, "run": 1}
+      25               0.873332            13               10 Gz_rad_s_range <= 0.475641 AND Ay_mps2_max <= -3.31597 AND Gx_rad_s_std > 0.0481941 AND Az_mps2_max > -0.73502 AND Az_mps2_max > 5.10923 AND FSR2_midfoot_proxy_min <= 2.75                                              {"cycle": 4, "fall": 3, "watch_tv": 3, "hang_out_clothes": 2, "wc": 1}
+      44               0.965909            12                1                                         Gz_rad_s_range > 0.475641 AND Ay_mps2_rms <= 8.0514 AND Ax_mps2_rms <= 2.2772 AND Az_mps2_mean > -4.74253 AND Az_mps2_max > 6.79953                                                                                         {"fall": 11, "watch_tv": 1}
+
+KEY FINDING 2 — FALSE NEGATIVES ARE MORE DISTRIBUTED
+----------------------------------------------------
+There are 17 leaves containing false negatives, with 223 false-negative windows total.
+
+Largest false-negative leaves:
+ leaf_id  leaf_fall_probability  window_count  false_negatives                                                                                                                                                                     path_conditions                                                                                                                           activities_top
+      70               0.732049           858               80         Gz_rad_s_range > 0.475641 AND Ay_mps2_rms > 8.0514 AND Gx_rad_s_std <= 1.69729 AND Az_mps2_max > -0.557849 AND FSR3_forefoot_proxy_mean > 2.045 AND Ax_mps2_min <= -4.23534                                {"sweep": 190, "mop": 145, "walk": 124, "cycle": 113, "wc": 99, "fall": 80, "wash_window": 57, "run": 37}
+      71               0.419604          1267               46          Gz_rad_s_range > 0.475641 AND Ay_mps2_rms > 8.0514 AND Gx_rad_s_std <= 1.69729 AND Az_mps2_max > -0.557849 AND FSR3_forefoot_proxy_mean > 2.045 AND Ax_mps2_min > -4.23534               {"sweep": 268, "cycle": 261, "mop": 242, "wash_window": 180, "wc": 102, "hang_out_clothes": 65, "fall": 46, "ironing": 35}
+      67               0.676021           377               35         Gz_rad_s_range > 0.475641 AND Ay_mps2_rms > 8.0514 AND Gx_rad_s_std <= 1.69729 AND Az_mps2_max > -0.557849 AND FSR3_forefoot_proxy_mean <= 2.045 AND Ax_mps2_rms <= 2.36256                     {"wc": 89, "cycle": 72, "mop": 63, "sweep": 54, "fall": 35, "wash_window": 28, "ironing": 10, "hang_out_clothes": 7}
+      64               0.318131           391               15                   Gz_rad_s_range > 0.475641 AND Ay_mps2_rms > 8.0514 AND Gx_rad_s_std <= 1.69729 AND Az_mps2_max <= -0.557849 AND Ax_mps2_min > -4.17788 AND Az_mps2_max > -1.52511         {"sweep": 89, "cycle": 76, "wash_window": 68, "wc": 38, "ironing": 36, "mop": 28, "folding_clothes": 21, "hang_out_clothes": 15}
+      60               0.485839           107               14                Gz_rad_s_range > 0.475641 AND Ay_mps2_rms > 8.0514 AND Gx_rad_s_std <= 1.69729 AND Az_mps2_max <= -0.557849 AND Ax_mps2_min <= -4.17788 AND Az_mps2_mean <= -2.98983                                   {"mop": 22, "wc": 21, "ironing": 21, "wash_window": 17, "fall": 14, "sweep": 8, "cycle": 2, "walk": 2}
+      22               0.365995           544                6              Gz_rad_s_range <= 0.475641 AND Ay_mps2_max <= -3.31597 AND Gx_rad_s_std > 0.0481941 AND Az_mps2_max > -0.73502 AND Az_mps2_max <= 5.10923 AND Ax_mps2_min <= -0.117316 {"folding_clothes": 108, "brushing_teeth": 99, "drink": 64, "hang_out_clothes": 55, "wash_window": 51, "cycle": 48, "mop": 32, "wc": 25}
+      63               0.120800           270                5                  Gz_rad_s_range > 0.475641 AND Ay_mps2_rms > 8.0514 AND Gx_rad_s_std <= 1.69729 AND Az_mps2_max <= -0.557849 AND Ax_mps2_min > -4.17788 AND Az_mps2_max <= -1.52511         {"wc": 76, "ironing": 40, "cycle": 36, "hang_out_clothes": 22, "sweep": 19, "wash_window": 17, "folding_clothes": 17, "mop": 16}
+       6               0.002424          6890                4 Gz_rad_s_range <= 0.475641 AND Ay_mps2_max <= -3.31597 AND Gx_rad_s_std <= 0.0481941 AND Gz_rad_s_range <= 0.395746 AND Az_mps2_max <= 8.55688 AND FSR1_heel_proxy_range <= 414.333      {"watch_tv": 721, "cut": 683, "wash_face": 682, "write": 663, "wash_dish": 657, "use_computer": 657, "eat": 641, "play_phone": 627}
+
+INTERPRETATION
+--------------
+- Leaf 68 has fall probability 0.897214, just above the operating threshold; it produces 218 false positives, particularly in sweeping and several other normal activities, but also contains actual fall windows.
+- Leaf 51 has fall probability 0.884954, also just above the threshold; it produces 95 false positives, predominantly in ironing, but also contains actual fall windows.
+- The 2 leaves together contribute 91.0% of validation false positives.
+- False negatives are spread across 17 leaves; the largest are leaves 70, 71, and 67.
+- These patterns show overlapping feature patterns between fall-labelled windows and normal activities in the existing dataset. They do not by themselves prove the sensor channels are faulty.
+
+IMPORTANT PROBABILITY NOTE
+-------------------------
+The model was trained with class_weight='balanced'. Scikit-learn leaf probabilities therefore reflect the class-weighted training distribution. Treat `fall_probability` as a model score for thresholding, not as a calibrated real-world probability of a person falling.
+
+DECISION
+--------
+Do not change the model or threshold based solely on this trace. Raising the threshold above the leaf-68/leaf-51 scores would suppress many false positives but would also reject true fall windows in those same leaves.
+
+Keep current reference:
+  Model: Balanced-12
+  Threshold: 0.873332226678
+
+NEXT STEP
+---------
+Run a controlled Python-only model refinement experiment using the existing training and validation partitions:
+  - Preserve current Balanced-12 as a frozen baseline.
+  - Train alternative trees only on the training participants.
+  - Use grouped/participant-aware validation logic or predeclared candidate settings.
+  - Compare validation F2, fall recall, false-positive rate, and node count.
+  - Do not tune on the test partition.
+  - Do not claim footwear prototype accuracy from CAPPIMU results.
+
+This report is diagnostic; do not use the same validation split for endless iterative tuning.

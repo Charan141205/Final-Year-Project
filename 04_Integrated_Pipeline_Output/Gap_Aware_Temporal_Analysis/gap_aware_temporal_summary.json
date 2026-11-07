@@ -1,0 +1,29 @@
+{
+  "windows_analyzed": 110949,
+  "subjects_analyzed": 30,
+  "split_counts": {
+    "test": 5,
+    "train": 21,
+    "validation": 4
+  },
+  "baseline_two_consecutive_exact_match": true,
+  "gap_thresholds_tested_ms": [
+    100,
+    125,
+    150,
+    175,
+    200,
+    250,
+    300,
+    400,
+    500
+  ],
+  "validation_fpr_limit": 0.01,
+  "selected_policy": "gap_aware_2_of_3_warm_start",
+  "selected_max_interwindow_gap_ms": 500,
+  "validation_F2": 0.6481481481481481,
+  "validation_recall": 0.616692426584235,
+  "validation_FPR": 0.006484252529571042,
+  "test_not_used_for_selection": true,
+  "note": "Gap-aware links require same subject/recording, consecutive window_id, non-negative inter-window gap <= selected max. Recording/activity boundaries and missing window IDs always reset state."
+}

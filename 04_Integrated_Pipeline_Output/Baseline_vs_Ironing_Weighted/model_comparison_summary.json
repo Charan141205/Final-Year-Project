@@ -1,0 +1,12 @@
+{
+  "rows": 110949,
+  "subjects": 30,
+  "baseline_threshold": 0.8733322266783254,
+  "candidate_threshold": 0.74,
+  "baseline_model": "03_Python_Inference_Package\\trained_models\\balanced12_decision_tree.joblib",
+  "candidate_model": "03_Python_Inference_Package\\balanced12_ironing_weighted_candidate.joblib",
+  "baseline_raw_reproduction_mismatches": 0,
+  "inference_uses_activity_label": false,
+  "candidate_is_experimental_only": true,
+  "note": "CAPPIMU test split has been inspected during development; treat metrics as diagnostic pending fresh independent evaluation."
+}

@@ -1,0 +1,56 @@
+{
+  "model_name": "Balanced-12 refined candidate",
+  "task": "fall_related vs normal_activity",
+  "feature_count": 12,
+  "feature_order": [
+    "FSR1_heel_proxy_range",
+    "FSR2_midfoot_proxy_min",
+    "FSR3_forefoot_proxy_mean",
+    "FSR4_toe_proxy_min",
+    "Gz_rad_s_range",
+    "Ay_mps2_rms",
+    "Az_mps2_max",
+    "Gx_rad_s_std",
+    "Ax_mps2_min",
+    "Ay_mps2_max",
+    "Az_mps2_mean",
+    "Ax_mps2_rms"
+  ],
+  "class_mapping": {
+    "0": "normal_activity",
+    "1": "fall_related"
+  },
+  "max_depth_requested": 8,
+  "min_samples_leaf": 100,
+  "class_weight": "balanced",
+  "random_state": 42,
+  "actual_depth": 8,
+  "node_count": 163,
+  "leaf_count": 82,
+  "selected_probability_threshold": 0.8187539373214455,
+  "threshold_source": "5-fold StratifiedGroupKFold out-of-fold training predictions only",
+  "cross_validation": "5-fold StratifiedGroupKFold; subject_id used as group; all 21 training subjects partitioned by fold",
+  "validation_evaluation": {
+    "threshold": 0.8187539373214455,
+    "accuracy": 0.9564743546079967,
+    "balanced_accuracy": 0.8216910400200529,
+    "fall_precision": 0.5046296296296297,
+    "fall_recall": 0.6738794435857806,
+    "fall_f1": 0.5771012574454004,
+    "fall_f2": 0.6315179606025493,
+    "false_positive_rate": 0.03049736354567479,
+    "tn": 13606,
+    "fp": 428,
+    "fn": 211,
+    "tp": 436
+  },
+  "test_used_for_selection": false,
+  "limitations": [
+    "Validation has been used for prior model development; this comparison is a development evaluation, not an untouched final result.",
+    "Test partition was not used for hyperparameter or threshold selection in this experiment.",
+    "CAPPIMU pressure values are regional proxies, not actual shoe FSR measurements.",
+    "CAPPIMU IMU is knee-mounted, not shoe-mounted.",
+    "Target is activity/window-level fall_related, not precise fall onset.",
+    "Dataset evaluation does not establish physical footwear prototype accuracy."
+  ]
+}

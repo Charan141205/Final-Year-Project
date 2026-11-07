@@ -1,0 +1,61 @@
+|--- GM_max <= 1.24
+|   |--- SVM_max <= 10.03
+|   |   |--- class: 0
+|   |--- SVM_max >  10.03
+|   |   |--- SVM_min <= 5.08
+|   |   |   |--- SVM_std <= 1.00
+|   |   |   |   |--- Jerk_max <= 249.19
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- Jerk_max >  249.19
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- SVM_std >  1.00
+|   |   |   |   |--- class: 0
+|   |   |--- SVM_min >  5.08
+|   |   |   |--- SVM_range <= 1.19
+|   |   |   |   |--- SVM_max <= 10.42
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- SVM_max >  10.42
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- SVM_range >  1.19
+|   |   |   |   |--- P_drop_range <= 1.96
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- P_drop_range >  1.96
+|   |   |   |   |   |--- class: 0
+|--- GM_max >  1.24
+|   |--- P_drop_range <= 0.55
+|   |   |--- SVM_max <= 11.07
+|   |   |   |--- class: 1
+|   |   |--- SVM_max >  11.07
+|   |   |   |--- P_drop_range <= 0.12
+|   |   |   |   |--- SVM_max <= 12.22
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- SVM_max >  12.22
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- P_drop_range >  0.12
+|   |   |   |   |--- SVM_min <= 9.03
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- SVM_min >  9.03
+|   |   |   |   |   |--- class: 0
+|   |--- P_drop_range >  0.55
+|   |   |--- SVM_min <= 5.93
+|   |   |   |--- GM_range <= 5.81
+|   |   |   |   |--- GM_max <= 1.90
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- GM_max >  1.90
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- GM_range >  5.81
+|   |   |   |   |--- Heel_ratio_mean <= 0.01
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- Heel_ratio_mean >  0.01
+|   |   |   |   |   |--- class: 0
+|   |   |--- SVM_min >  5.93
+|   |   |   |--- SVM_range <= 7.80
+|   |   |   |   |--- Heel_ratio_mean <= 0.00
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- Heel_ratio_mean >  0.00
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- SVM_range >  7.80
+|   |   |   |   |--- P_total_min_ratio <= 0.00
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- P_total_min_ratio >  0.00
+|   |   |   |   |   |--- class: 1

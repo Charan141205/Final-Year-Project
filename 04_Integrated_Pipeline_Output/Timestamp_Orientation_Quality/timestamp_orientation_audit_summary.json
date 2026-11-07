@@ -1,0 +1,24 @@
+{
+  "raw_root": "C:\\Users\\lagis\\Downloads\\data\\data",
+  "expected_subjects": 30,
+  "processed_subjects": 30,
+  "missing_subjects": 0,
+  "error_subjects": 0,
+  "rows_scanned": 5986742,
+  "finite_adjacent_timestamp_pairs": 5986712,
+  "duplicate_timestamp_steps_dt_eq_0": 1165230,
+  "backward_timestamp_steps_dt_lt_0": 0,
+  "nonincreasing_timestamp_steps_total": 1165230,
+  "nonincreasing_percent_of_finite_pairs": 19.4636053980883,
+  "positive_gaps_over_threshold": 602,
+  "gap_threshold_raw_units": 500.0,
+  "segment_breaks_if_dt_lt_0_or_gt_threshold": 602,
+  "orientation_rows_ey_outside_provisional_pm90": 15,
+  "orientation_rows_matching_joint_ey_ez_pattern": 15,
+  "warning": "Timestamp units are not assumed. This diagnostic distinguishes exact duplicates from backwards steps. It does not change source files or establish Euler axis mapping/rotation convention.",
+  "outputs": {
+    "subject_summary": "timestamp_orientation_quality_by_subject.csv",
+    "inventory": "timestamp_audit_inventory.csv",
+    "event_examples": "timestamp_event_examples.csv"
+  }
+}
