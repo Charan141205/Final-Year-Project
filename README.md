@@ -2,6 +2,10 @@
 
 A multi-modal wearable smart shoe-insole system for real-time fall detection and automated emergency confirmation, combining plantigrade pressure sensing with inertial kinematics.
 
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Charan141205%2FFinal--Year--Project-blue?logo=github)](https://github.com/Charan141205/Final-Year-Project)
+[![Platform](https://img.shields.io/badge/Platform-ESP32%20%7C%20Arduino%20%7C%20Python-orange)](https://github.com/Charan141205/Final-Year-Project)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+
 ---
 
 ## 📌 Project Overview & Abstract
@@ -85,66 +89,44 @@ The system was developed and validated using the **CAPPIMU Public Benchmark Data
 
 ```
 .
-├── 01_Training_Data_and_Analysis/
+├── 01_Training_Data_and_Analysis/                 # Extracted CAPPIMU feature datasets and validation reports
 │   ├── balanced12_training_data.csv               # 110,949 pre-extracted CAPPIMU feature windows
 │   ├── low_arithmetic12_training_data.csv         # Depth-4 low-cost candidate dataset
 │   ├── BALANCED12_FEATURE_CALCULATION_SPEC.md     # Exact mathematical definitions of 12 features
 │   ├── BALANCED12_CONTROLLED_REFINEMENT_REPORT.txt# 5-fold grouped CV and hyperparameter audit
 │   └── balanced12_fixed_point_verification_report.txt # Q12 fixed-point integer verification (0 mismatches)
 │
-├── 02_Model_Training_Outputs/
+├── 02_Model_Training_Outputs/                     # Reference Scikit-Learn model artifacts
 │   ├── balanced12_decision_tree.joblib            # Trained Balanced-12 reference model
 │   └── balanced12_decision_tree_manifest.json     # Model metadata, leaf counts, and threshold
 │
-├── 03_Python_Inference_Package/
-│   ├── balanced12_inference.py                    # Production Python inference wrapper
+├── 03_Python_Inference_Package/                   # Production Python inference engine
+│   ├── balanced12_inference.py                    # Inference wrapper on feature rows
 │   ├── balanced12_feature_calculator.py           # Window-level raw-to-feature calculator
 │   ├── balanced12_full_pipeline.py                # End-to-end raw segmentation & inference
 │   ├── balanced12_temporal_confirmation.py        # Causal multi-window confirmation simulator
 │   └── BALANCED12_PYTHON_INFERENCE_CONTRACT.txt   # Input contract and runtime validation rules
 │
-├── 04_Integrated_Pipeline_Output/
+├── 04_Integrated_Pipeline_Output/                 # Complete diagnostic batch reports
 │   ├── Baseline_vs_Ironing_Weighted/              # ADL false-positive mitigation analysis
 │   ├── Gap_Aware_Temporal_Analysis/               # Hardware clock-gap handling and segmentation
 │   ├── Subject_8_Raw/                             # Verified raw pipeline execution on subject 8
 │   └── Orientation_Channel_Check/                 # IMU Euler angle and rotation audit
 │
+├── 05_ESP32_Firmware/                             # Production-ready embedded firmware
+│   ├── smart_insole_fall_detector.ino             # Main Arduino/ESP32 sketch with 50 Hz timer
+│   ├── decision_tree_classifier.h                 # Pure C++ Decision Tree header (OIN-10)
+│   └── README.md                                  # Wiring pinout diagram and flashing guide
+│
+├── docs/                                          # Scientific documentation and audit reports
+│   └── PROJECT_VALIDATION_AND_LITERATURE_AUDIT.md # Systematic literature review & NotebookLM validation
+│
 ├── orientation_invariant_fall_detector.py         # OIN-10 rotational-invariant pipeline & trainer
+├── orientation_invariant_features_subject8.csv    # Extracted OIN-10 features on 31 fall trials
 ├── orientation_invariant_tree_rules.txt           # Exported C++ compatible Decision Tree logic
+├── subject8_cappimu_raw_verified.csv              # 194k-row raw benchmark recording with 31 falls
 ├── SMART_FOOTWEAR_PROJECT_WORKING_GUIDE.md        # Complete engineering handoff guide & audit log
 └── START_HERE.txt                                 # Quick start directory guide
-```
-
----
-
-## 🚀 Quick Start Guide
-
-### 1. Prerequisites & Environment Setup
-Clone the repository and set up a Python 3.10+ virtual environment:
-```bash
-git clone https://github.com/Charan141205/Final-Year-Project.git
-cd Final-Year-Project
-
-python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# Linux/macOS:
-source .venv/bin/activate
-
-pip install numpy pandas scikit-learn joblib
-```
-
-### 2. Run the Orientation-Invariant Pipeline
-Extract orientation-invariant features and train the false-alarm resistant Decision Tree:
-```bash
-python orientation_invariant_fall_detector.py
-```
-
-### 3. Run Inference on Feature Tables
-To run predictions using the verified `Balanced-12` inference engine:
-```bash
-cd 03_Python_Inference_Package
-python balanced12_inference.py --input-csv ../01_Training_Data_and_Analysis/balanced12_training_data.csv --output-csv predictions.csv
 ```
 
 ---
@@ -156,10 +138,12 @@ The decision tree was deliberately restricted to **depth 6** with **41 leaves**,
 * **Fixed-Point Precision:** Tested at Q12 (12 fractional bits, scale 4096) with **zero classification mismatches** against 64-bit IEEE floating-point.
 * **Timer Interrupt:** Runs on a dedicated hardware timer interrupt at $50\text{ Hz}$ ($20,000\ \mu\text{s}$) to avoid sampling jitter.
 
+For full schematics and flashing instructions, refer to [`05_ESP32_Firmware/README.md`](./05_ESP32_Firmware/README.md).
+
 ---
 
 ## 👥 Authors & Acknowledgments
 
 * **Lead Developer / Author:** [Charan141205](https://github.com/Charan141205)
-* **Project:** Final Year Engineering Project — Smart Footwear Fall Detection System
+* **Project Repository:** [https://github.com/Charan141205/Final-Year-Project](https://github.com/Charan141205/Final-Year-Project)
 * **Benchmark Source:** CAPPIMU Dataset & Biomechanical Fall Benchmarks (SisFall, MobiFall)
