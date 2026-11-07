@@ -1,6 +1,28 @@
-# ESP32 Smart Insole Fall Detection Firmware
+# ESP32 Smart Insole Fall Detection Firmware (v2.0)
 
-This folder contains the complete embedded C++ firmware for deploying the Smart Insole Fall Detection System onto an **ESP32 microcontroller**.
+This folder contains the complete, fine-tuned embedded C++ firmware for deploying the Smart Insole Fall Detection System onto an **ESP32 microcontroller**.
+
+---
+
+## 🎛️ Operational User Presets
+
+The firmware includes 3 pre-calibrated operational modes in [`smart_insole_fall_detector.ino`](./smart_insole_fall_detector.ino) (`#define USER_PROFILE_PRESET`):
+
+| Preset | Mode | Stillness Window | Shock Threshold | Target Demographic / Use Case |
+|---|---|---|---|---|
+| **1** | `HIGH_SENSITIVITY` | $1.0\text{ s}$ | $16.0\text{ m/s}^2$ ($1.63\text{ g}$) | Sedentary / High-risk elderly; captures slow, damped falls |
+| **2** | `BALANCED_DEFAULT` *(Recommended)* | $1.5\text{ s}$ | $20.0\text{ m/s}^2$ ($2.04\text{ g}$) | Standard daily living with $<1\%$ false alarm rate |
+| **3** | `ACTIVE_LIFESTYLE` | $2.5\text{ s}$ | $25.0\text{ m/s}^2$ ($2.55\text{ g}$) | Highly active users, joggers; maximum false alarm suppression |
+
+---
+
+## ⚡ Dual-Path Triggering Mechanism
+
+To ensure both violent falls and slow/damped falls are caught without raising false alarms:
+1. **Path 1 (High-Shock Violent Falls):**
+   - Triggered when temporal decision tree detects fall pattern AND acceleration peak $\text{SVM}_{\max} > \text{Threshold}$ or vector jerk $J > 200\text{ m/s}^3$.
+2. **Path 2 (Soft / Damped Falls — e.g., F07 fainting against table, F10 chair slide):**
+   - Triggered when moderate shock ($\text{SVM}_{\max} > 14.0\text{ m/s}^2$) is accompanied by severe plantar pressure collapse ($P_{\text{total}} < 20\%$ standing baseline and $P_{\text{drop\_range}} > 0.40$).
 
 ---
 
@@ -20,27 +42,6 @@ This folder contains the complete embedded C++ firmware for deploying the Smart 
 
 ---
 
-## ⚡ Key Embedded Features
-
-1. **50 Hz Hardware Timer Interrupt:**
-   - Uses ESP32 Hardware Timer 0 with an 80 prescaler ($1\ \mu\text{s}$ tick).
-   - Samples sensors precisely every $20,000\ \mu\text{s}$ ($20\text{ ms}$ interval), completely eliminating sampling jitter from `delay()` or serial logging.
-2. **Power-On Zero-Tare Subtraction:**
-   - Samples 100 points on system startup while the insole is unloaded to measure initial pre-load and resistor offsets, mapping baseline unloaded counts to zero.
-3. **Orientation-Invariant & Normalized (OIN-10) Features:**
-   - Computes 3D vector norms: $\text{SVM} = \sqrt{A_x^2 + A_y^2 + A_z^2}$, $\text{GM} = \sqrt{G_x^2 + G_y^2 + G_z^2}$, and vector jerk $J = \frac{\Delta\text{SVM}}{\Delta t}$.
-   - Fully independent of sensor mounting orientation inside the shoe sole.
-4. **Sub-50 $\mu$s Decision Tree Inference:**
-   - Implemented in [`decision_tree_classifier.h`](./decision_tree_classifier.h) using simple conditional branches (`<=`). Requires no floating-point matrix operations or neural network weights.
-5. **Causal 2-of-3 Temporal Confirmation:**
-   - Evaluates the rolling history of the last 3 windows. Requires at least 2 consecutive positive alerts to trigger the impact verification stage.
-6. **Post-Impact Inactivity Verification:**
-   - Verifies whether the subject is motionless on the ground ($\text{SVM}_{\text{std}} < 1.2\text{ m/s}^2$, $\text{GM}_{\max} < 1.0\text{ rad/s}$) before sounding the alarm. This suppresses over $99\%$ of false alarms caused by running, jumping, and hard heel strikes.
-7. **30-Second Emergency Cancellation Countdown:**
-   - Beeps intermittently for 30 seconds, allowing a conscious user to cancel a false trigger by pressing the shoe button before emergency dispatch is alerted.
-
----
-
 ## 🛠️ Build and Flash Instructions
 
 ### Using Arduino IDE:
@@ -51,5 +52,5 @@ This folder contains the complete embedded C++ firmware for deploying the Smart 
 2. Select your board: `Tools > Board > ESP32 Dev Module`.
 3. Open `smart_insole_fall_detector.ino`.
 4. Ensure `decision_tree_classifier.h` is in the same folder.
-5. Connect your ESP32 via micro-USB and click **Upload**.
+5. Connect your ESP32 via USB and click **Upload**.
 6. Open Serial Monitor at **115200 baud** to view real-time calibration and detection status.
