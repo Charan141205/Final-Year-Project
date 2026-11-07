@@ -76,12 +76,13 @@ The system was developed and validated using the **CAPPIMU Public Benchmark Data
 
 ### Empirical Validation Results
 
-| Model / Pipeline Stage | Fall Recall | Fall Precision | False Positive Rate (FPR) | Alert Reduction |
+| Model / Pipeline Stage | Fall Recall | Fall Precision | False Positive Rate (FPR) | Alert Reduction / Scope |
 |---|---|---|---|---|
-| **Raw Balanced-12 Model** | 65.53% | 55.21% | 2.45% | Baseline |
+| **Raw Balanced-12 Model** | 65.53% | 55.21% | 2.45% | CAPPIMU Baseline |
 | **With Causal 2-of-3 Temporal Filter** | 64.22% | 82.13% | **0.60%** | **-75.6% false alarms** |
 | **Ironing-Weighted + Temporal Filter** | **65.32%** | **82.83%** | **0.56%** | **-77.0% false alarms** |
-| **Orientation-Invariant Tree (OIN-10)** | **89.19%** | **78.40%** | **0.88%** | **Fully rotation-proof** |
+| **Orientation-Invariant Tree (CAPPIMU)** | **89.19%** | **78.40%** | **0.88%** | **Fully rotation-proof** |
+| **SisFall Empirical Benchmark (4,505 trials)**| **96.61%** | **98.53%** | **0.96%** | **98.07% Overall Accuracy, 97.12% Elderly** |
 
 ---
 

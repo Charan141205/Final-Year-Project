@@ -75,3 +75,64 @@ This document synthesizes the formal engineering audit and validation of the Sma
 | **Impact Threshold** | Peak $\ge 20 \dots 25\text{ m/s}^2$ | Foot placement: $\ge 4.5 \dots 6.0\text{ g}$ | *Bourke et al. (2007)*; *Rucco et al. (2018)* | **SUPPORTED** |
 | **Post-Fall Inactivity** | $\text{SVM}_{\text{std}} < 1.2\text{ m/s}^2$, $\text{GM} < 1.0\text{ rad/s}$ | $\text{std}(\text{SVM}) < 0.1\text{ g}$ for $1.5 \dots 3.0\text{ s}$ | *Kangas et al. (2008)*; *Bourke et al. (2007)* | **SUPPORTED** |
 | **Cross-Validation** | Leave-One-Subject-Out (LOSO) | Grouped K-Fold / LOSO | *Saeb et al. (2017)*; *Halilaj et al. (2018)* | **SUPPORTED** |
+
+
+---
+
+## 4. SisFall Empirical Benchmark Verification Results
+
+The Orientation-Invariant Fall Detection Engine was evaluated across the complete, raw **SisFall Dataset** (`c:\Users\lagis\Downloads\SisFall\SisFall_dataset`) containing **4,505 trials** across **38 subjects** (23 young adults, 15 elderly adults).
+
+### Comprehensive Benchmark Metrics
+
+```
+============================================================
+        SISFALL BENCHMARK EMPIRICAL TEST RESULTS
+============================================================
+Total Trials Tested:       4,505
+Total Execution Time:      59.54 seconds (single-thread Python)
+Throughput:                75.7 trials / second
+Average Trial Latency:     13.217 ms per recording
+------------------------------------------------------------
+OVERALL ACCURACY:          98.07%
+FALL SENSITIVITY (RECALL): 96.61% (1,737 of 1,798 falls detected)
+ADL SPECIFICITY:           99.04% (2,681 of 2,707 ADLs rejected)
+FALL PRECISION:            98.53%
+F1-SCORE:                  97.56%
+FALSE POSITIVE RATE:       0.96%
+------------------------------------------------------------
+Confusion Matrix:
+  True Positives  (TP) = 1,737 | False Negatives (FN) = 61
+  True Negatives  (TN) = 2,681 | False Positives (FP) = 26
+============================================================
+```
+
+### Performance by Subject Demographics
+* **Elderly Participants (SE01 – SE15, 60–75 years old):** **97.12% Accuracy** (945 of 973 trials correct).
+* **Young Adult Participants (SA01 – SA23, 19–30 years old):** **98.33% Accuracy** (3,473 of 3,532 trials correct).
+
+### Fall Category Sensitivity (F01 – F15)
+* `F01` (Forward fall walking - slip): **98.32%** (117/119)
+* `F02` (Backward fall walking - slip): **96.67%** (116/120)
+* `F03` (Lateral fall walking - slip): **94.17%** (113/120)
+* `F04` (Forward fall walking - trip): **99.17%** (119/120)
+* `F05` (Forward fall jogging - trip): **99.17%** (119/120)
+* `F06` (Vertical faint fall): **96.67%** (116/120)
+* `F07` (Faint fall with table damping): **95.83%** (115/120)
+* `F08` (Fall getting up from chair): **99.17%** (119/120)
+* `F09` (Lateral fall getting up): **97.50%** (117/120)
+* `F10` (Fall sitting down): **95.80%** (114/119)
+* `F11` (Backward fall sitting down): **92.50%** (111/120)
+* `F12` (Lateral fall sitting down): **98.33%** (118/120)
+* `F13` (Faint forward from chair): **90.00%** (108/120)
+* `F14` (Backward faint from chair): **98.33%** (118/120)
+* `F15` (Lateral faint from chair): **97.50%** (117/120)
+
+### Rejection of Aggressive Non-Fall ADLs (100% Rejection)
+* `D01` (Walking slowly): **100.0%** (38/38)
+* `D02` (Walking quickly): **100.0%** (38/38)
+* `D03` (Jogging slowly): **100.0%** (38/38)
+* `D04` (Jogging quickly): **100.0%** (38/38)
+* `D05` (Stairs slowly): **100.0%** (190/190)
+* `D06` (Stairs quickly): **100.0%** (115/115)
+* `D19` (Jumping up and down): **100.0%** (115/115)
